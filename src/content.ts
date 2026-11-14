@@ -51,6 +51,13 @@ export interface Project {
   live?: string;
 }
 
+/** A short fact shown in the hero's "at a glance" panel. */
+export interface Highlight {
+  label: string;
+  value: string;
+  note?: string;
+}
+
 export interface Content {
   site: {
     url: string;
@@ -77,6 +84,7 @@ export interface Content {
     href: string;
     downloadName: string;
   };
+  highlights: Highlight[];
   about: string[];
   skills: SkillGroup[];
   experience: Role[];
@@ -117,6 +125,13 @@ export const content: Content = {
     href: '/Turki_Aljohani_Resume.pdf',
     downloadName: 'Turki_Aljohani_Resume.pdf',
   },
+
+  /** Hero "at a glance" panel — keep each fact traceable to the resume. */
+  highlights: [
+    { label: 'GPA', value: '3.92 / 4.00', note: 'Umm Al-Qura University' },
+    { label: 'Graduated', value: 'June 2026', note: 'Diploma in Programming and Computer Science' },
+    { label: 'Co-op', value: 'Saudi Aramco', note: 'January – April 2026' },
+  ],
 
   about: [
     'I’m a Programming and Computer Science graduate from Umm Al-Qura University, where I completed a Diploma in Programming and Computer Science in June 2026 with a 3.92/4.00 GPA.',

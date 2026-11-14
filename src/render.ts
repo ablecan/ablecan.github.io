@@ -22,6 +22,8 @@ const icon = {
     '<svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>',
   up:
     '<svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8 13.5v-10M4.5 7 8 3.5 11.5 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>',
+  pin:
+    '<svg class="icon icon--lead" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8 14.5s4.5-4.2 4.5-7.75a4.5 4.5 0 0 0-9 0C3.5 10.3 8 14.5 8 14.5Z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6.75" r="1.6" fill="currentColor"/></svg>',
 };
 
 const newTab = '<span class="visually-hidden"> (opens in a new tab)</span>';
@@ -70,7 +72,7 @@ function sections(c: Content): Section[] {
     body: `<dl class="skills">${c.skills
       .map(
         (g) =>
-          `<div class="skills__row"><dt>${esc(g.name)}</dt><dd><ul class="inline-list">${g.items
+          `<div class="skills__row"><dt>${esc(g.name)}</dt><dd><ul class="tags">${g.items
             .map((s) => `<li>${esc(s)}</li>`)
             .join('')}</ul></dd></div>`,
       )
@@ -203,8 +205,8 @@ function siteFooter(c: Content, withTop: boolean): string {
 
 function commonHead(c: Content): string {
   return `<meta name="author" content="${esc(c.person.name)}">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0d0e10">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">`;
@@ -260,14 +262,31 @@ export function renderHomeBody(c: Content): string {
   const list = sections(c);
   const navItems = list.filter((s): s is Section & { nav: string } => Boolean(s.nav));
 
-  const hero = `<section class="hero container" aria-labelledby="hero-title">
-  <p class="eyebrow">${esc(c.person.role)}</p>
-  <h1 id="hero-title" class="hero__name">${esc(c.person.name)}</h1>
-  <p class="hero__intro">${esc(c.person.intro)}</p>
-  <p class="hero__location"><span class="visually-hidden">Location: </span>${esc(c.person.location)}</p>
-  <div class="actions">
-    ${resumeButtons(c)}
-    <a class="btn btn--ghost" href="${esc(c.person.github.href)}" ${extAttrs}>GitHub${icon.external}${newTab}</a>
+  const facts = c.highlights.length
+    ? `<aside class="facts" aria-labelledby="facts-title">
+    <h2 id="facts-title" class="facts__title">At a glance</h2>
+    <dl class="facts__list">${c.highlights
+      .map(
+        (h) =>
+          `<div class="facts__item"><dt>${esc(h.label)}</dt><dd><span class="facts__value">${esc(h.value)}</span>${h.note ? `<span class="facts__note">${esc(h.note)}</span>` : ''}</dd></div>`,
+      )
+      .join('')}</dl>
+  </aside>`
+    : '';
+
+  const hero = `<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__main">
+      <p class="eyebrow"><span class="eyebrow__mark" aria-hidden="true"></span>${esc(c.person.role)}</p>
+      <h1 id="hero-title" class="hero__name">${esc(c.person.name)}</h1>
+      <p class="hero__intro">${esc(c.person.intro)}</p>
+      <p class="hero__location">${icon.pin}<span class="visually-hidden">Location: </span>${esc(c.person.location)}</p>
+      <div class="actions">
+        ${resumeButtons(c)}
+        <a class="btn btn--ghost" href="${esc(c.person.github.href)}" ${extAttrs}>GitHub${icon.external}${newTab}</a>
+      </div>
+    </div>
+    ${facts}
   </div>
 </section>`;
 

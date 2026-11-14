@@ -38,18 +38,19 @@ const fonts = `
 @font-face { font-family: 'Plex Sans'; font-weight: 600; src: url('${fontUrl('ibm-plex-sans-latin-600-normal.woff2')}') format('woff2'); }
 @font-face { font-family: 'Plex Mono'; font-weight: 400; src: url('${fontUrl('ibm-plex-mono-latin-400-normal.woff2')}') format('woff2'); }
 @font-face { font-family: 'Plex Mono'; font-weight: 500; src: url('${fontUrl('ibm-plex-mono-latin-500-normal.woff2')}') format('woff2'); }
-html, body { margin: 0; background: #0d0e10; }
+html, body { margin: 0; background: #f7f6f2; }
 `;
 
 const ogHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}
-  body { width: 1200px; height: 630px; overflow: hidden; color: #a3a7ae; font-family: 'Plex Sans'; }
+  body { width: 1200px; height: 630px; overflow: hidden; color: #464a52; font-family: 'Plex Sans'; background-image: radial-gradient(circle, #d6d3ca 1.5px, transparent 1.8px); background-size: 30px 30px; }
+  .frame::after { content: ''; position: absolute; left: -88px; right: -88px; bottom: -72px; height: 14px; background: #2b55d1; }
   .frame { position: absolute; inset: 72px 88px; display: flex; flex-direction: column; }
   .top { display: flex; align-items: center; justify-content: space-between; font: 400 22px 'Plex Mono'; letter-spacing: .04em; }
-  .mark { display: inline-grid; place-items: center; width: 56px; height: 56px; border: 1.5px solid #3a3d43; color: #ecedee; font: 500 20px 'Plex Mono'; letter-spacing: .04em; }
-  .eyebrow { margin-top: auto; color: #d4a35a; font: 400 22px 'Plex Mono'; letter-spacing: .12em; text-transform: uppercase; }
-  h1 { margin: 22px 0 0; color: #ecedee; font: 600 96px/1 'Plex Sans'; letter-spacing: -.035em; }
-  .rule { margin: 44px 0 26px; border-top: 1.5px solid #24262a; }
-  .bottom { display: flex; justify-content: space-between; font: 400 22px 'Plex Mono'; letter-spacing: .06em; color: #868a92; }
+  .mark { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 8px; background: #2b55d1; color: #ffffff; font: 500 20px 'Plex Mono'; letter-spacing: .04em; }
+  .eyebrow { margin-top: auto; color: #2b55d1; font: 500 22px 'Plex Mono'; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { margin: 22px 0 0; color: #14161b; font: 600 96px/1 'Plex Sans'; letter-spacing: -.035em; }
+  .rule { margin: 44px 0 26px; border-top: 1.5px solid #c4c1b8; }
+  .bottom { display: flex; justify-content: space-between; font: 400 22px 'Plex Mono'; letter-spacing: .06em; color: #676a72; }
 </style></head><body><div class="frame">
   <div class="top"><span class="mark">TA</span><span>ablecan.github.io</span></div>
   <p class="eyebrow">Programming &amp; Computer Science Graduate</p>
@@ -60,7 +61,7 @@ const ogHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}
 
 const favicon = readFileSync(join(pub, 'favicon.svg'), 'utf8');
 const iconHtml = (size, fullBleed) => `<!doctype html><html><head><meta charset="utf-8"><style>
-  html, body { margin: 0; width: ${size}px; height: ${size}px; overflow: hidden; background: #0d0e10; }
+  html, body { margin: 0; width: ${size}px; height: ${size}px; overflow: hidden; background: #2b55d1; }
   svg { display: block; width: ${size}px; height: ${size}px; }
 </style></head><body>${fullBleed ? favicon.replace('rx="4"', 'rx="0"') : favicon}</body></html>`;
 
